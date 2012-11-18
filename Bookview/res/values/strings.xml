@@ -3,5 +3,7 @@
 
     <string name="hello">Hello World, BookviewActivity!</string>
     <string name="app_name">Shayari</string>
+    <string name="loading_screen">Shayari</string>
+    <string name="header_text">Mehfil~e~Shayari</string>
 
 </resources>
