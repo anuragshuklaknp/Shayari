@@ -3,14 +3,16 @@ package org.anurag.bookview;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 
 public class LoadingScreenActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
+	requestWindowFeature(Window.FEATURE_NO_TITLE);
 	setContentView(R.layout.loadingscreen);
 	/** set time to splash out */
-	final int loadingdisplaytime = 3000;
+	final int loadingdisplaytime = 2000;
 	/** create a thread to show splash up to splash time */
 	Thread welcomeThread = new Thread() {
 	int wait = 0;

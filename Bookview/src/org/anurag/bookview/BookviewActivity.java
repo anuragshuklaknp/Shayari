@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.Window;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +38,7 @@ public class BookviewActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
         
         mimage = (ImageView) findViewById(R.id.pageimage);
@@ -43,10 +48,10 @@ public class BookviewActivity extends Activity {
         	mtext.setText(savedInstanceState.getString("page_text"));
         } else {
         	mpage_number = 0;
-        	mimage.setImageResource(R.drawable.frontcover);
+        	mimage.setImageResource(R.drawable.bookcover);
         }
         if (mpage_number == 0) {
-        	mimage.setImageResource(R.drawable.frontcover);
+        	mimage.setImageResource(R.drawable.bookcover);
         }
         Intent intent = getIntent();
         String selecteditem = intent.getStringExtra("selected item");
@@ -65,7 +70,7 @@ public class BookviewActivity extends Activity {
                     if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     	if (mpage_number < 50) {
 	                    	if (mpage_number == 0) {
-	                			mimage.setImageResource(R.drawable.frontcover);
+	                			mimage.setImageResource(R.drawable.bookcover);
 	                    	} else {
 	                    		mimage.setImageResource(R.drawable.pageimage);
 	                    	}
@@ -75,7 +80,7 @@ public class BookviewActivity extends Activity {
                     }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     	if (mpage_number > 0) {
 	                    	if (mpage_number == 1) {
-	                			mimage.setImageResource(R.drawable.frontcover);
+	                			mimage.setImageResource(R.drawable.bookcover);
 	                    	} else {
 	                    		mimage.setImageResource(R.drawable.pageimage);
 	                    	}
@@ -122,5 +127,32 @@ public class BookviewActivity extends Activity {
 		rotation.setInterpolator(new AccelerateInterpolator());
 		rotation.setAnimationListener(new DisplayNextPage(mpage_number, screenWidth, screenHeight, mtext));
 		mimage.startAnimation(rotation);
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.layout.menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menushareoption:  
+            	Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+            	   shareIntent.setType("text/plain");
+            	   shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, new String("Shayari App From LifeApps"));
+            	   if (mpage_number == 0) {
+            		   shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, new String("Share it!"));
+            	   } else {
+            		   shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, mtext.getText());
+            	   }
+            	   
+
+            	   startActivity(Intent.createChooser(shareIntent, "Share the App"));
+            	break;
+        }
+        return true;
     }
 }

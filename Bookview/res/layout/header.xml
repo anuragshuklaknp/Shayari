@@ -5,14 +5,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#323331">
- 
-    <TextView
+    <Button 
         android:id="@+id/header"
-        android:textStyle="italic"
+        android:background="@drawable/banner"
+        android:shadowColor="#323331"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:textStyle="bold"
         android:gravity="center_horizontal"
-        android:textSize="28dp"
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"
         android:text="@string/header_text"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
- 
 </LinearLayout>
